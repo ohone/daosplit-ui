@@ -4,6 +4,9 @@
 
 <script lang="ts">
 	import Counter from '$lib/Counter.svelte';
+	import { connected } from 'svelte-web3';
+	import ProviderModal from '$lib/ProviderModal.svelte';
+	import Modal from 'svelte-simple-modal';
 </script>
 
 <svelte:head>
@@ -25,7 +28,7 @@
 	<h2>
 		try editing <strong>src/routes/index.svelte</strong>
 	</h2>
-
+	<Modal show={$connected === true ? undefined : ProviderModal} />
 	<Counter />
 </section>
 
