@@ -3,10 +3,15 @@
 </script>
 
 <script lang="ts">
-	import Counter from '$lib/Counter.svelte';
+	import { goto } from '$app/navigation';
 	import { connected } from 'svelte-web3';
 	import ProviderModal from '$lib/ProviderModal.svelte';
 	import Modal from 'svelte-simple-modal';
+
+	let splitAddress: string | undefined = undefined;
+	const onKeyPress = (e: KeyboardEvent) => {
+		if (e.key === 'Enter') goto('/split/' + splitAddress);
+	};
 </script>
 
 <svelte:head>
@@ -14,22 +19,14 @@
 </svelte:head>
 
 <section>
-	<h1>
-		<div class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</div>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
+	<h2>enter dao split address</h2>
+	<input
+		bind:value={splitAddress}
+		class="addressInput"
+		on:keypress={onKeyPress}
+		on:submit={() => goto('/split/' + splitAddress)}
+	/>
 	<Modal show={$connected === true ? undefined : ProviderModal} />
-	<Counter />
 </section>
 
 <style>
@@ -41,22 +38,7 @@
 		flex: 1;
 	}
 
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
+	.addressInput {
+		width: 500px;
 	}
 </style>

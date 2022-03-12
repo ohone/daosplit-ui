@@ -10,7 +10,12 @@
 </main>
 
 <footer>
-	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
+	<a href="https://github.com/ohone/daosplit">
+		<picture>
+			<source srcset="ghub-logo.png" type="image/png" />
+			<img src="ghub-logo.png" alt="github" />
+		</picture>
+	</a>
 </footer>
 
 <style>
@@ -29,6 +34,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		margin-top: auto;
 		align-items: center;
 		padding: 40px;
 	}
