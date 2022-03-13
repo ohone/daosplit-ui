@@ -2,7 +2,9 @@
 	<div class="cornerText">
 		<a href="https://eoghan.dev">eoghan.dev</a>
 	</div>
-	<span class="title">DaoSplit</span>
+	<a href="/">
+		<span class="title">DaoSplit</span>
+	</a>
 
 	<div class="corner">
 		<!-- TODO put something else here? github link? -->

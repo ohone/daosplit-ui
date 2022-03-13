@@ -4,9 +4,7 @@
 
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { connected } from 'svelte-web3';
-	import ProviderModal from '$lib/ProviderModal.svelte';
-	import Modal from 'svelte-simple-modal';
+	import WrappedModal from '$lib/WrappedModal.svelte';
 
 	let splitAddress: string | undefined = undefined;
 	const onKeyPress = (e: KeyboardEvent) => {
@@ -26,7 +24,10 @@
 		on:keypress={onKeyPress}
 		on:submit={() => goto('/split/' + splitAddress)}
 	/>
-	<Modal show={$connected === true ? undefined : ProviderModal} />
+	<WrappedModal />
+
+	<h2>or</h2>
+	<button on:click={() => goto('/create')}>start new split</button>
 </section>
 
 <style>

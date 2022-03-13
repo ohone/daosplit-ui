@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { browser, dev } from '$app/env';
 	import { page } from '$app/stores';
-	import ProviderModal from '$lib/ProviderModal.svelte';
+	import ProviderModal from '$lib/ConnectModal.svelte';
 	import Modal from 'svelte-simple-modal';
-	import { connected, web3 } from 'svelte-web3';
+	import { connected, makeContractStore } from 'svelte-web3';
+	import contractAbi from '../../lib/contracts/DaoSplit.json';
+	import type { AbiItem } from 'web3-utils';
 
 	// we don't need any JS on this page, though we'll load
 	// it in dev so that we get hot module replacement...
@@ -12,25 +14,38 @@
 	// ...but if the client-side router is already loaded
 	// (i.e. we came here from elsewhere in the app), use it
 	export const router = browser;
-
 	// since there's no dynamic data here, we can prerender
 	// it so that it gets served as a static asset in prod
 	export const prerender = true;
-	let address: string;
-
-	page.subscribe((o) => {
-		address = o.params.address;
+	let address = $page.params.address;
+	let myStore = makeContractStore(contractAbi as AbiItem[], address);
+	let activePromise: Promise<string> | undefined = undefined;
+	let completePromise: Promise<string> | undefined = undefined;
+	let refundPromise: Promise<string> | undefined = undefined;
+	let a = myStore.subscribe((s) => {
+		if (s) {
+			activePromise = s.methods.isActive().call();
+			completePromise = s.methods.isComplete().call();
+			refundPromise = s.methods.isRefund().call();
+		}
 	});
 </script>
 
 <div class="content">
 	<Modal show={$connected === true ? undefined : ProviderModal} />
+
 	<h1>{address}</h1>
-
 	<h2>Progress</h2>
-
+	{#await refundPromise}
+		loading
+	{:then progress}
+		{progress}
+	{:catch error}
+		{error}
+	{/await}
 	<h2>Contribute</h2>
 	<p>Contribute tokens to the daosplit.</p>
+	<b>Contributed: </b> 
 	<h2>Rewards</h2>
 	<p><b>total:</b> 100</p>
 	<p><b>my rewards:</b> 300</p>
