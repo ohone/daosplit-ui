@@ -1,4 +1,4 @@
-interface SupportedChain {
+export interface SupportedChain {
 	chainId: number;
 	name: string;
 }

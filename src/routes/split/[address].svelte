@@ -6,6 +6,7 @@
 	import { connected, makeContractStore } from 'svelte-web3';
 	import contractAbi from '../../lib/contracts/DaoSplit.json';
 	import type { AbiItem } from 'web3-utils';
+	import WrappedModal from '$lib/WrappedModal.svelte';
 
 	// we don't need any JS on this page, though we'll load
 	// it in dev so that we get hot module replacement...
@@ -31,6 +32,7 @@
 	});
 </script>
 
+<WrappedModal />
 <div class="content">
 	<Modal show={$connected === true ? undefined : ProviderModal} />
 
@@ -45,7 +47,7 @@
 	{/await}
 	<h2>Contribute</h2>
 	<p>Contribute tokens to the daosplit.</p>
-	<b>Contributed: </b> 
+	<b>Contributed: </b>
 	<h2>Rewards</h2>
 	<p><b>total:</b> 100</p>
 	<p><b>my rewards:</b> 300</p>

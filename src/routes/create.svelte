@@ -1,6 +1,7 @@
 <script context="module">
 	import { browser, dev } from '$app/env';
-
+	import WrappedModal from '$lib/WrappedModal.svelte';
+	import { SupportedChains } from '../lib/SupportedChains';
 	// we don't need any JS on this page, though we'll load
 	// it in dev so that we get hot module replacement...
 	export const hydrate = dev;
@@ -19,9 +20,7 @@
 	let tokenCreation: Promise<string> | undefined = undefined;
 </script>
 
-<svelte:head>
-	<title>About</title>
-</svelte:head>
+<WrappedModal requiredChain={SupportedChains} />
 
 <div class="content">
 	<h1>create new split</h1>
