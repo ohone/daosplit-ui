@@ -17,7 +17,6 @@
 
 <script lang="ts">
 	export let targetToken: string | undefined = undefined;
-	let tokenCreation: Promise<string> | undefined = undefined;
 </script>
 
 <WrappedModal requiredChain={SupportedChains} />
