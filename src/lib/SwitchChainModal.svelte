@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { defaultEvmStores, web3 } from 'svelte-web3';
+	import { web3 } from 'svelte-web3';
 	import { SupportedChains } from './SupportedChains';
 	let title: string | undefined = 'Switch to supported chain';
 
