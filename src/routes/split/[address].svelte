@@ -20,47 +20,39 @@
 	export const prerender = true;
 	let address = $page.params.address;
 	let myStore = makeContractStore(contractAbi as AbiItem[], address);
-	let activePromise: Promise<string> | undefined = undefined;
-	let completePromise: Promise<string> | undefined = undefined;
-	let refundPromise: Promise<string> | undefined = undefined;
-	let a = myStore.subscribe((s) => {
-		if (s) {
-			activePromise = s.methods.isActive().call();
-			completePromise = s.methods.isComplete().call();
-			refundPromise = s.methods.isRefund().call();
-		}
-	});
 </script>
 
 <WrappedModal />
-<div class="content">
-	<Modal show={$connected === true ? undefined : ProviderModal} />
+{#if $myStore !== undefined && $myStore !== null}
+	<div class="content">
+		<Modal show={$connected === true ? undefined : ProviderModal} />
 
-	<h1>{address}</h1>
-	<h2>Progress</h2>
-	{#await refundPromise}
-		loading
-	{:then progress}
-		{progress}
-	{:catch error}
-		{error}
-	{/await}
-	<h2>Contribute</h2>
-	<p>Contribute tokens to the daosplit.</p>
-	<b>Contributed: </b>
-	<h2>Rewards</h2>
-	<p><b>total:</b> 100</p>
-	<p><b>my rewards:</b> 300</p>
-	<button>Claim</button>
-</div>
+		<h1>{address}</h1>
+		<h2>Progress</h2>
+		{#await $myStore.methods.isRefund().call()}
+			loading
+		{:then refundState}
+			{refundState}
+		{:catch error}
+			{error}
+		{/await}
+		<h2>Contribute</h2>
+		<p>Contribute tokens to the daosplit.</p>
+		<b>Contributed: </b>
+		<h2>Rewards</h2>
+		<p><b>total:</b> 100</p>
+		<p><b>my rewards:</b> 300</p>
+		<button>Claim</button>
+	</div>
 
-<style>
-	.content {
-		width: 100%;
-		max-width: var(--column-width);
-		margin: var(--column-margin-top) auto 0 auto;
-	}
-	h2 {
-		font-size: x-large;
-	}
-</style>
+	<style>
+		.content {
+			width: 100%;
+			max-width: var(--column-width);
+			margin: var(--column-margin-top) auto 0 auto;
+		}
+		h2 {
+			font-size: x-large;
+		}
+	</style>
+{/if}
