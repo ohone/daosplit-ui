@@ -45,19 +45,5 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
 
-      - name: Authorize Docker push
-        run: gcloud auth configure-docker
-
-      - name: Build and Push Container
-        run: |-
-          docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} .
-          docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
-
-      - name: Deploy to Cloud Run
-        run: |-
-          gcloud run deploy ${{ env.SERVICE }} \
-            --region ${{ env.REGION }} \
-            --allow-unauthenticated \
-            --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
-            --platform "managed" \
-            --quiet
+      - name: Push to cloud storage
+        run: gsutil -m cp -r /build/* gs://daosplit
