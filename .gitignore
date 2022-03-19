@@ -6,5 +6,6 @@ node_modules
 !.env.example
 .vercel
 .output
+/build
 /.svelte-kit/*
 !/.svelte-kit/tsconfig.json
