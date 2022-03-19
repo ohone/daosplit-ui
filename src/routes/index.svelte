@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>daosplit</title>
 </svelte:head>
 
 <section>
