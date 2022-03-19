@@ -46,4 +46,4 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0
 
       - name: Push to cloud storage
-        run: gsutil -m cp -r /build/* gs://daosplit
+        run: gsutil -m cp -r build/* gs://daosplit
