@@ -5,6 +5,9 @@ import adapter from '@sveltejs/adapter-static';
 const config = {
 	preprocess: preprocess(),
 	kit: {
+		paths:{
+			assets:"https://storage.googleapis.com/daosplit"
+		},
 		adapter: adapter({
 			// default options are shown
 			pages: 'build',
